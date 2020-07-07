@@ -59,25 +59,52 @@
 
 // Constructor Function
 
-function watashi(nama,uang){
-    this.nama = nama;
-    this.uang = uang;
+// function watashi(nama,uang){
+//     this.nama = nama;
+//     this.uang = uang;
 
-    this.kerja = function(gaji){
-        this.uang += gaji;
-        console.log(`terimakasih ${this.nama}`);
-    }
+//     this.kerja = function(gaji){
+//         this.uang += gaji;
+//         console.log(`terimakasih ${this.nama}`);
+//     }
 
-    this.belanja = function(uang){
-        this.uang -= uang;
-        console.log(`uang telah berkurang`);
-    }
-}
+//     this.belanja = function(uang){
+//         this.uang -= uang;
+//         console.log(`uang telah berkurang`);
+//     }
+// }
 
-let enjun = new watashi('Enjun',5000);
+// let enjun = new watashi('Enjun',5000);
 
 
 
 // Object.create
 
+const methodWatashi = {
+    kerja: function(gaji){
+        this.uang += gaji;
+        console.log(`gaji berhasil ditambahkan`);
+    },
+
+    shopping: function(harga){
+        this.uang -= harga;
+        console.log(`uang telah dikurangi`);
+    },
+
+    lembur: function(gaji){
+        this.uang += gaji*2;
+        console.log(`gaji telah ditambah lembur`);
+    }
+}
+
+function Aku (nama,uang) {
+    let aku = Object.create(methodWatashi);
+
+    aku.nama = nama;
+    aku.uang = uang;
+
+    return aku;
+}
+
+let Enjun = Aku('Enjun',30000);
 
