@@ -80,31 +80,84 @@
 
 // Object.create
 
-const methodWatashi = {
-    kerja: function(gaji){
-        this.uang += gaji;
-        console.log(`gaji berhasil ditambahkan`);
-    },
+// const methodWatashi = {
+//     kerja: function(gaji){
+//         this.uang += gaji;
+//         console.log(`gaji berhasil ditambahkan`);
+//     },
 
-    shopping: function(harga){
-        this.uang -= harga;
-        console.log(`uang telah dikurangi`);
-    },
+//     shopping: function(harga){
+//         this.uang -= harga;
+//         console.log(`uang telah dikurangi`);
+//     },
 
-    lembur: function(gaji){
-        this.uang += gaji*2;
-        console.log(`gaji telah ditambah lembur`);
+//     lembur: function(gaji){
+//         this.uang += gaji*2;
+//         console.log(`gaji telah ditambah lembur`);
+//     }
+// }
+
+// function Aku (nama,uang) {
+//     let aku = Object.create(methodWatashi);
+
+//     aku.nama = nama;
+//     aku.uang = uang;
+
+//     return aku;
+// }
+
+// let Enjun = Aku('Enjun',30000);
+
+
+
+// Prototype
+
+// function watashi(nama,nilai,uang){
+//     this.nama = nama;
+//     this.nilai = nilai;
+//     this.uang = uang;
+// }
+
+// watashi.prototype.ujian = function (nilai){
+//     this.nilai += nilai;
+//     return `Ujian selesai, nilai ditambahkan`;
+// }
+
+// watashi.prototype.kerja = function (gaji){
+//     this.uang += gaji;
+//     return 'Gaji telah ditambahkan';
+// }
+
+// watashi.prototype.belanja = function (harga){
+//     if(this.uang < harga){
+//         return 'Uang tidak cukup';
+//     } else {
+//     this.uang -= harga;
+//     return 'Uang telah dipotong'; }
+// }
+
+// let enjun = new watashi('Enjun',60,5000);
+
+
+Versi Class
+
+class Watashi {
+    constructor(nama,uang){
+        this.nama = nama;
+        this.uang = uang;
     }
+
+    kerja(gaji){
+        this.uang += gaji;
+        return `Hai ${this.nama}, gaji telah ditambahkan`;
+    }
+    
+    lembur(gaji){
+        this.uang += gaji*2;
+        return `Hai ${this.nama}, gaji telah ditambahkan`;
+    }
+
 }
 
-function Aku (nama,uang) {
-    let aku = Object.create(methodWatashi);
-
-    aku.nama = nama;
-    aku.uang = uang;
-
-    return aku;
-}
-
-let Enjun = Aku('Enjun',30000);
+let klotze  = new Watashi('Enjun',8000);
 
