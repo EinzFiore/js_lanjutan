@@ -139,7 +139,7 @@
 // let enjun = new watashi('Enjun',60,5000);
 
 
-Versi Class
+// Versi Class
 
 class Watashi {
     constructor(nama,uang){
