@@ -1,4 +1,5 @@
 // HTML Fragments
+
 // const watashi = {
 //     nama: 'Ahmad Junaedi',
 //     umur : 20,
@@ -56,32 +57,65 @@
 
 // Nested
 
-const mhs  = {
-    nama: 'Ahmad Junaedi',
-    semester: 4,
-    matakuliah: [
-        'Manajemen Project Sistem Informasi',
-        'Web Programming',
-        'Perancangan Sistem Berorientasi Object'
-    ]
-};
+// const mhs  = {
+//     nama: 'Ahmad Junaedi',
+//     semester: 4,
+//     matakuliah: [
+//         'Manajemen Project Sistem Informasi',
+//         'Web Programming',
+//         'Perancangan Sistem Berorientasi Object'
+//     ]
+// };
 
 
-function listMatkul(matkul) {
-    return `
-        <ol>
-            ${mhs.matakuliah.map(m => `<li>${m}</li>`).join('')}
-        </ol>
-    `;
+// function listMatkul(matkul) {
+//     return `
+//         <ol>
+//             ${mhs.matakuliah.map(m => `<li>${m}</li>`).join('')}
+//         </ol>
+//     `;
+// }
+
+// const el = `
+//     <div class="mhs">
+//         <h2>${mhs.nama}</h2>
+//         <span class="semester">Semester ${mhs.semester}</span>
+//         <h4>Matakuliah</h4>
+//         ${listMatkul()}
+//     </div>
+// `;
+
+// document.body.innerHTML = el;
+
+
+// Tagged Template
+
+// const nama = 'Ahmad Junaedi';
+// const umur = 20;
+
+// function coba(strings, ...values) {
+//     // let results = '';
+//     // strings.forEach((str,i) => {
+//     //     results += `${str}${values[i] || ''}`;
+//     // });
+//     // return results;
+
+//     // versi reduce
+//     return strings.reduce((result,str,i) => `${result}${str}${values[i] || ''}`, '');
+// }
+
+// const str = coba`Halo nama saya ${nama}, saya ${umur} tahun.`;
+// console.log(str);
+
+
+// Highlight
+
+const nama = 'Ahmad Junaedi';
+const umur = 20;
+
+function highlight(strings, ...values) {
+    return strings.reduce((result,str,i) => `${result}${str} <span class="hl">${values[i] || ''}</span>`, '');
 }
 
-const el = `
-    <div class="mhs">
-        <h2>${mhs.nama}</h2>
-        <span class="semester">Semester ${mhs.semester}</span>
-        <h4>Matakuliah</h4>
-        ${listMatkul()}
-    </div>
-`;
-
-document.body.innerHTML = el;
+const str = highlight`Halo nama saya ${nama}, saya ${umur} tahun.`;
+document.body.innerHTML = str;
