@@ -69,17 +69,45 @@
 // Refactor
 const btnSearch = document.querySelector('.search-button');
 btnSearch.addEventListener('click', async function() {
-    const inputKeyword = document.querySelector('.input-keyword');
-    const movies = await getAnime(inputKeyword.value);
-    updateUI(movies);
+    try{
+        const inputKeyword = document.querySelector('.input-keyword');
+        const movies = await getAnime(inputKeyword.value);
+        updateUI(movies);
+    } catch(err){
+        alert(err);
+    }
 });
+
+
+function getAnime(keyword){
+    return fetch('http://www.omdbapi.com/?apikey=3bea8a2a&s=' + keyword)
+        .then(response => {
+            if(!response.ok){
+                throw new Error(response.statusText);
+            } return response.json();
+        })
+        .then(response => {
+            if(response.Response === "False"){
+                throw new Error(response.Error);
+            } return response.Search;
+        });
+}
+
+function updateUI(movies){
+    let cards = '';
+    movies.forEach(m => cards += showCards(m));
+    const movieContainer = document.querySelector('.movie-container');
+    movieContainer.innerHTML= cards;
+
+}
+
 
 
 // Event binding
 
 document.addEventListener('click', async function(e) {
     if(e.target.classList.contains('detailBtn')) {
-        const imdbid = e.target.dataset.imdbid;
+        const imdbid = element.target.dataset.imdbid;
         const movieDetail = await getMovieDetail(imdbid);
         updateUIDetail(movieDetail);
     }
@@ -99,19 +127,7 @@ function updateUIDetail(m) {
 }
 
 
-function getAnime(keyword){
-    return fetch('http://www.omdbapi.com/?apikey=3bea8a2a&s=' + keyword)
-        .then(response => response.json())
-        .then(response => response.Search);
-}
 
-function updateUI(movies){
-    let cards = '';
-    movies.forEach(m => cards += showCards(m));
-    const movieContainer = document.querySelector('.movie-container');
-    movieContainer.innerHTML= cards;
-
-}
 
 
 
