@@ -34,37 +34,84 @@
 
 
 // Versi Fetch
+// const btnSearch = document.querySelector('.search-button');
+// btnSearch.addEventListener('click', function() {
+//     const inputKey = document.querySelector('.input-keyword');
+//     fetch('http://www.omdbapi.com/?apikey=3bea8a2a&s=' + inputKey.value)
+//         .then(Response => Response.json())
+//         .then(Response => {
+//             const movies = Response.Search;
+//             let cards = '';
+
+//             movies.forEach(m => cards += showCards(m));
+//             const movieContainer = document.querySelector('.movie-container');
+//             movieContainer.innerHTML = cards;
+
+//             // ketika btn detail di klik
+//             const btnDetail = document.querySelectorAll('.detailBtn');
+//             btnDetail.forEach(btn => {
+//                 btn.addEventListener('click', function() {
+//                     const imdbID = this.dataset.imdbid;
+//                     fetch('http://www.omdbapi.com/?apikey=3bea8a2a&i=' + imdbID)
+//                         .then(Response => Response.json())
+//                         .then(m => {
+//                             const movieDetail = showMovieDetail(m);
+//                             const modalBody = document.querySelector('.modal-body');
+//                             modalBody.innerHTML = movieDetail; 
+//                         });
+//                 });
+//             });
+//         });
+// });
+
+
+
+// Refactor
 const btnSearch = document.querySelector('.search-button');
-btnSearch.addEventListener('click', function() {
-    const inputKey = document.querySelector('.input-keyword');
-    fetch('http://www.omdbapi.com/?apikey=3bea8a2a&s=' + inputKey.value)
-        .then(Response => Response.json())
-        .then(Response => {
-            const movies = Response.Search;
-            let cards = '';
-
-            movies.forEach(m => cards += showCards(m));
-            const movieContainer = document.querySelector('.movie-container');
-            movieContainer.innerHTML = cards;
-
-            // ketika btn detail di klik
-            const btnDetail = document.querySelectorAll('.detailBtn');
-            btnDetail.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const imdbID = this.dataset.imdbid;
-                    fetch('http://www.omdbapi.com/?apikey=3bea8a2a&i=' + imdbID)
-                        .then(Response => Response.json())
-                        .then(m => {
-                            const movieDetail = showMovieDetail(m);
-                            const modalBody = document.querySelector('.modal-body');
-                            modalBody.innerHTML = movieDetail; 
-                        });
-                });
-            });
-        });
-
+btnSearch.addEventListener('click', async function() {
+    const inputKeyword = document.querySelector('.input-keyword');
+    const movies = await getAnime(inputKeyword.value);
+    updateUI(movies);
 });
 
+
+// Event binding
+
+document.addEventListener('click', async function(e) {
+    if(e.target.classList.contains('detailBtn')) {
+        const imdbid = e.target.dataset.imdbid;
+        const movieDetail = await getMovieDetail(imdbid);
+        updateUIDetail(movieDetail);
+    }
+});
+
+
+function getMovieDetail(imdbid){
+    return fetch('http://www.omdbapi.com/?apikey=3bea8a2a&i=' + imdbid)
+        .then(response => response.json())
+        .then(m => m);
+}
+
+function updateUIDetail(m) {
+    const movieDetail = showMovieDetail(m);
+    const modalBody = document.querySelector('.modal-body');
+    modalBody.innerHTML = movieDetail;
+}
+
+
+function getAnime(keyword){
+    return fetch('http://www.omdbapi.com/?apikey=3bea8a2a&s=' + keyword)
+        .then(response => response.json())
+        .then(response => response.Search);
+}
+
+function updateUI(movies){
+    let cards = '';
+    movies.forEach(m => cards += showCards(m));
+    const movieContainer = document.querySelector('.movie-container');
+    movieContainer.innerHTML= cards;
+
+}
 
 
 
